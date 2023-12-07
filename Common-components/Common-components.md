@@ -2,27 +2,21 @@
 
 ​除了 Qt 自带的一些布局 Layout 类，还可以使用 DTK 自己实现或重写过的一些类来更好的实现界面的布局。
 
-### DflowLayout
+### DFlowLayout
 
-​DflowLayout 用于创建一个新的流布局管理器，具有指定的对齐方式以及指定的水平和垂直间隙，用于图形化界面设计，示例代码如下。
+​DFlowLayout 用于创建一个新的流布局管理器，具有指定的对齐方式以及指定的水平和垂直间隙，用于图形化界面设计，示例代码如下。
 
 ```c++
-#include <dflowlayout.h>
-
+#include <DFlowLayout.h>
 #include <DFloatingButton>
 
     DMainWindow w;
-
     DFlowLayout layout;
-
     QWidget *widget = new QWidget(&w);
-
     widget->setLayout(&layout);
 
 for (int i = 0; i< 3000; ++i) {
-
     DFloatingButton *button = new FloatingButton(widget);
-
     layout.insertWidget(i, button);
 
 }
@@ -42,29 +36,18 @@ for (int i = 0; i< 3000; ++i) {
 
 ```c++
 #include <QLabel>
-
 #include <DAnchors>
 
 QWidget *widget = new QWidget;
-
 QLabel *lb1 = new QLabel("anchor1", widget);
-
 QLabel *lb2 = new QLabel("anchor2", widget);
-
 DAnchors<QLabel> anchor1(lb1);
-
 DAnchors<QLabel> anchor2(lb2);
-
 anchor2.setLeft(anchor1.right());
-
 anchor2.moveHorizontalCenter(widget->width()/2);
-
 anchor2.moveVerticalCenter(widget->height()/2);
-
 anchor1.moveHorizontalCenter(widget->width()/2);
-
 anchor1.moveVerticalCenter(widget->height()/2);
-
 anchor2.setLeftMargin(15);
 ```
 
@@ -82,29 +65,18 @@ DFrame 控件又称为容器控件，能为窗体上的控件进行分组。(见
 
 ```c++
  #include <DFrame>
- 
  #include <DWidget>
 
   DMainWindow w;
-
   w.resize(600, 400);
-
   Dtk::Widget::moveToCenter(&w);
- 
   DWidget *widget = new DWidget;
- 
   w.setCentralWidget(widget);
-
   QVBoxLayout *layout = new QVBoxLayout(widget);
- 
   DFrame *frame = new DFrame(widget);
-
   QHBoxLayout *frameLayout = new QHBoxLayout(frame);
-
   frame->resize(widget->size());
- 
   layout->addWidget(frame);
-
   w.show();
 ```
 
@@ -122,129 +94,82 @@ DFrame 控件又称为容器控件，能为窗体上的控件进行分组。(见
 
 ```c++
   #include <DFrame>
-
   #include <DWidget>
-
   #include <DListView>
 
   // 创建 widget
   DMainWindow w;
-
   w.resize(600, 400);
-
   w.show();
-
   Dtk::Widget::moveToCenter(&w);
-
   DWidget *widget = new DWidget;
-
   w.setCentralWidget(widget);
 
   // 添加 DFrame 与布局管理
   QVBoxLayout *layout = new QVBoxLayout(widget);
-
   DFrame *frame = new DFrame(widget);
-
   QHBoxLayout *frameLayout = new QHBoxLayout(frame);
-
   layout->addWidget(frame);
 
   // 添加 listview
   DListView *listView = new DListView(/*widget*/);
-
   QStandardItemModel *itemModel = new QStandardItemModel(widget);
-
   listView->setModel(itemModel);
-
   listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
   listView->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
-
   listView->setSelectionMode(QAbstractItemView::NoSelection);
-
   listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
   listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
   listView->setSpacing(1);
 
   DStandardItem *item1 = new DStandardItem("item1");
-
   DStandardItem *item2 = new DStandardItem("item2");
-
   DStandardItem *item3 = new DStandardItem("item3");
-
   item1->setCheckable(true);
-
   item2->setCheckable(true);
-
   item3->setCheckable(true);
-
   itemModel->appendRow(item1);
-
   itemModel->appendRow(item2);
-
   itemModel->appendRow(item3);
-
   frameLayout->addWidget(listView);
 ```
 
-### DbackgroundGroup
+### DBackgroundGroup
 
-DbackgroundGroup 组件用于设置所有的背景属性，示例代码如下：
+DBackgroundGroup 组件用于设置所有的背景属性，示例代码如下：
 
 ```c++
  #include <DFrame>
-
   #include <DWidget>
-
   #include <DBackgroundGroup>
-  
+
   QMainWindow w;
-
   Dtk::Widget::moveToCenter(&w);
-
   DWidget *widget = new DWidget;
-
   w.setCentralWidget(widget);
 
   // 添加 DFrame
   QVBoxLayout *layout = new QVBoxLayout(widget);
-
   DFrame *frame = new DFrame(widget);
-
   QHBoxLayout *frameLayout = new QHBoxLayout(frame);
-
   layout->addWidget(frame);
 
   // 添加第一组 DBackgroundGroup，由 3 个 QFrame 组成
   QVBoxLayout *vlayout1 = new QVBoxLayout;
-
   DBackgroundGroup *group1 = new DBackgroundGroup(vlayout1,&w);
-
   frameLayout->addWidget(group1);
-
   vlayout1->addWidget(new QFrame);
-
   vlayout1->addWidget(new QFrame);
-
   vlayout1->addWidget(new QFrame);
-
   group1->setUseWidgetBackground(false);
 
   // 添加第二组 DBackgroundGroup，由 3 个 QFrame 组成
   QVBoxLayout *vlayout2 = new QVBoxLayout;
-
   DBackgroundGroup *group2 = new DBackgroundGroup(vlayout2,&w);
-
   frameLayout->addWidget(group2);
-
   vlayout2->addWidget(new QFrame);
-
   vlayout2->addWidget(new QFrame);
-
   vlayout2->addWidget(new QFrame);
-
   group2->setUseWidgetBackground(false);
 ```
 
@@ -252,51 +177,31 @@ DbackgroundGroup 组件用于设置所有的背景属性，示例代码如下：
 
 ![ DbackgroundGroup 示例效果](Common-components.assets/image-20231206200256716.png)
 
-### DlistView
+### DListView
 
 DListView 允许用户通过上下滑动来将屏幕外的数据滚动到屏幕内,同时屏幕内原有的数据滚动出屏幕,从而显示更多的数据内。下面首先给出了示例代码。
 
 ```c++
   #include <DWidget>
-  
   #include<DListView>
-
   DMainWindow w;
-
   Dtk::Widget::moveToCenter(&w);
-
   DWidget *widget = new DWidget;
-
   w.setCentralWidget(widget);
-
   DListView *listView = new DListView(widget);
-
   QStandardItemModel *itemModel = new QStandardItemModel(widget);
-
   listView->setModel(itemModel);
-
   DStandardItem *item1 = new DStandardItem("item1");
-
   DStandardItem *item2 = new DStandardItem("item2");
-
   DStandardItem *item3 = new DStandardItem("item3");
-
   item1->setCheckable(false);
-
   item2->setCheckable(false);
-
   item3->setCheckable(false);
-
   itemModel->appendRow(item1);
-
   itemModel->appendRow(item2);
-
   itemModel->appendRow(item3);
-
   item1->setIcon(QIcon::fromTheme("preferences-system"));
-
   item2->setIcon(QIcon::fromTheme("preferences-system"));
-
   item3->setIcon(QIcon::fromTheme("preferences-system"));
 ```
 
@@ -309,43 +214,24 @@ DListView 经过了重绘，默认就是一些圆角的 listview ，可以给它
 ```c++
   #include <DWidget>
   #include <DListView>
-
   DWidget *widget = new DWidget;
-
   DListView *listView = new DListView(widget);
-
   QStandardItemModel *itemModel = new QStandardItemModel(widget);
-
   listView->setModel(itemModel);
-
   listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
   listView->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
-
   listView->setSelectionMode(QAbstractItemView::NoSelection);
-
   listView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  
   listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
   listView->setSpacing(1);
-
   DStandardItem *item1 = new DStandardItem("item1");
-
   DStandardItem *item2 = new DStandardItem("item2");
-
   DStandardItem *item3 = new DStandardItem("item3");
-
   item1->setCheckable(false);
-
   item2->setCheckable(false);
-
   item3->setCheckable(false);
-
   itemModel->appendRow(item1);
-
   itemModel->appendRow(item2);
-
   itemModel->appendRow(item3);
 ```
 
